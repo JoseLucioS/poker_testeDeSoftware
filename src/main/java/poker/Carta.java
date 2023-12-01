@@ -1,15 +1,10 @@
 package poker;
 
-/**
- *
- * @author Eiji Adachi
- *
- */
 public class Carta implements Comparable<Carta> {
 	/**
 	 * O valor de uma carta é representado internamente como um número inteiro.
 	 *
-	 * Ás é representado como 1
+	 * Ás é representado como 1 ou 14
 	 *
 	 * Números de 2 a 10 são representados por seus próprios valores.
 	 *
