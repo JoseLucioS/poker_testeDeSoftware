@@ -9,38 +9,46 @@ import org.junit.jupiter.api.Test;
 public class MaoTest {
 
 	@Test
-	public void test() {
-		//fail("Not yet implemented");
-		Carta carta = new Carta(4, Naipe.ESPADAS);
-		Assertions.assertEquals(4, carta.getValor());
-		Assertions.assertEquals(Naipe.ESPADAS, carta.getNaipe());
-	}
-
-	@Test
     public void testRoyalStraightFlush() {
 
-        List<Carta> cartasRoyalFlush = Arrays.asList(
-                new Carta(10, Naipe.PAUS),
-                new Carta(11, Naipe.PAUS),
-                new Carta(12, Naipe.PAUS),
-                new Carta(13, Naipe.PAUS),
-                new Carta(1, Naipe.PAUS)
+        List<Carta> cartasRoyalStraightFlush = Arrays.asList(
+                new CartaBuilder().withValor(10).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(11).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(12).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(13).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(1).withNaipe(Naipe.PAUS).build()
         );
 
-        Mao maoRoyalFlush = new Mao(cartasRoyalFlush);
+        Mao maoRoyalStraightFlush = new Mao(cartasRoyalStraightFlush);
         
-        Assertions.assertEquals(RankingMao.ROYAL_STRAIGHT_FLUSH, maoRoyalFlush.ranking());
+        Assertions.assertEquals(RankingMao.ROYAL_STRAIGHT_FLUSH, maoRoyalStraightFlush.ranking());
+    }
+	
+	@Test
+    public void testNOTRoyalStraightFlush() {
+
+        List<Carta> cartasNOTRoyalStraightFlush = Arrays.asList(
+                new CartaBuilder().withValor(10).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(11).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(12).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(13).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(1).withNaipe(Naipe.PAUS).build()
+        );
+
+        Mao maoNOTRoyalStraightFlush = new Mao(cartasNOTRoyalStraightFlush);
+        
+        Assertions.assertNotEquals(RankingMao.ROYAL_STRAIGHT_FLUSH, maoNOTRoyalStraightFlush.ranking());
     }
 	
 	@Test
     public void testStraightFlush() {
 
         List<Carta> cartasStraightFlush = Arrays.asList(
-                new Carta(5, Naipe.COPAS),
-                new Carta(1, Naipe.COPAS),
-                new Carta(4, Naipe.COPAS),
-                new Carta(2, Naipe.COPAS),
-                new Carta(3, Naipe.COPAS)
+        		new CartaBuilder().withValor(1).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(2).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(4).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(3).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.PAUS).build()
         );
 
         Mao maoStraightFlush = new Mao(cartasStraightFlush);
@@ -49,14 +57,30 @@ public class MaoTest {
     }
 	
 	@Test
+    public void testNOTStraightFlush() {
+
+        List<Carta> cartasNOTStraightFlush = Arrays.asList(
+        		new CartaBuilder().withValor(1).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(2).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(4).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(6).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.PAUS).build()
+        );
+
+        Mao maoNOTStraightFlush = new Mao(cartasNOTStraightFlush);
+        
+        Assertions.assertNotEquals(RankingMao.STRAIGHT_FLUSH, maoNOTStraightFlush.ranking());
+    }
+	
+	@Test
     public void testIsFourOfAKind() {
 
         List<Carta> cartasIsFourOfAKind = Arrays.asList(
-                new Carta(4, Naipe.ESPADAS),
-                new Carta(4, Naipe.OUROS),
-                new Carta(4, Naipe.PAUS),
-                new Carta(4, Naipe.COPAS),
-                new Carta(3, Naipe.COPAS)
+        		new CartaBuilder().withValor(7).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.PAUS).build()
         );
 
         Mao maoIsFourOfAKind = new Mao(cartasIsFourOfAKind);
@@ -65,14 +89,30 @@ public class MaoTest {
     }
 	
 	@Test
+    public void testIsNOTFourOfAKind() {
+
+        List<Carta> cartasIsNOTFourOfAKind = Arrays.asList(
+        		new CartaBuilder().withValor(7).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.PAUS).build()
+        );
+
+        Mao maoIsNOTFourOfAKind = new Mao(cartasIsNOTFourOfAKind);
+        
+        Assertions.assertNotEquals(RankingMao.QUADRA, maoIsNOTFourOfAKind.ranking());
+    }
+	
+	@Test
     public void testIsFullHouse() {
 
         List<Carta> cartasIsFullHouse = Arrays.asList(
-                new Carta(4, Naipe.ESPADAS),
-                new Carta(4, Naipe.OUROS),
-                new Carta(3, Naipe.PAUS),
-                new Carta(4, Naipe.PAUS),
-                new Carta(3, Naipe.COPAS)
+        		new CartaBuilder().withValor(7).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.PAUS).build()
         );
 
         Mao maoIsFullHouse = new Mao(cartasIsFullHouse);
@@ -81,14 +121,30 @@ public class MaoTest {
     }
 	
 	@Test
+    public void testIsNOTFullHouse() {
+
+        List<Carta> cartasIsNOTFullHouse = Arrays.asList(
+        		new CartaBuilder().withValor(7).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(4).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.PAUS).build()
+        );
+
+        Mao maoIsNOTFullHouse = new Mao(cartasIsNOTFullHouse);
+        
+        Assertions.assertNotEquals(RankingMao.FULL_HOUSE, maoIsNOTFullHouse.ranking());
+    }
+	
+	@Test
     public void testIsFlush() {
 
         List<Carta> cartasIsFlush = Arrays.asList(
-                new Carta(1, Naipe.OUROS),
-                new Carta(9, Naipe.OUROS),
-                new Carta(7, Naipe.OUROS),
-                new Carta(4, Naipe.OUROS),
-                new Carta(3, Naipe.OUROS)
+        		new CartaBuilder().withValor(3).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(4).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(8).withNaipe(Naipe.ESPADAS).build()
         );
 
         Mao maoIsFlush = new Mao(cartasIsFlush);
@@ -97,14 +153,30 @@ public class MaoTest {
     }
 	
 	@Test
+    public void testIsNOTFlush() {
+
+        List<Carta> cartasIsNOTFlush = Arrays.asList(
+        		new CartaBuilder().withValor(3).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(4).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(6).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
+        );
+
+        Mao maoIsNOTFlush = new Mao(cartasIsNOTFlush);
+        
+        Assertions.assertNotEquals(RankingMao.FLUSH, maoIsNOTFlush.ranking());
+    }
+	
+	@Test
     public void testIsStraight() {
 
         List<Carta> cartasIsStraight = Arrays.asList(
-                new Carta(1, Naipe.PAUS),
-                new Carta(2, Naipe.ESPADAS),
-                new Carta(5, Naipe.OUROS),
-                new Carta(4, Naipe.COPAS),
-                new Carta(3, Naipe.OUROS)
+        		new CartaBuilder().withValor(3).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(4).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(6).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
         );
 
         Mao maoIsStraight = new Mao(cartasIsStraight);
@@ -113,14 +185,30 @@ public class MaoTest {
     }
 	
 	@Test
+    public void testIsNOTStraight() {
+
+        List<Carta> cartasIsNOTStraight = Arrays.asList(
+        		new CartaBuilder().withValor(3).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(4).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(9).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
+        );
+
+        Mao maoIsNOTStraight = new Mao(cartasIsNOTStraight);
+        
+        Assertions.assertNotEquals(RankingMao.SEQUENCIA, maoIsNOTStraight.ranking());
+    }
+	
+	@Test
     public void testIsThreeOfAKind() {
 
         List<Carta> cartasIsThreeOfAKind = Arrays.asList(
-                new Carta(6, Naipe.PAUS),
-                new Carta(6, Naipe.ESPADAS),
-                new Carta(6, Naipe.OUROS),
-                new Carta(4, Naipe.COPAS),
-                new Carta(3, Naipe.OUROS)
+        		new CartaBuilder().withValor(3).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(3).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(3).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(9).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
         );
 
         Mao maoIsThreeOfAKind = new Mao(cartasIsThreeOfAKind);
@@ -129,14 +217,30 @@ public class MaoTest {
     }
 	
 	@Test
+    public void testIsNOTThreeOfAKind() {
+
+        List<Carta> cartasIsNOTThreeOfAKind = Arrays.asList(
+        		new CartaBuilder().withValor(3).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(3).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(9).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
+        );
+
+        Mao maoIsNOTThreeOfAKind = new Mao(cartasIsNOTThreeOfAKind);
+        
+        Assertions.assertNotEquals(RankingMao.TRINCA, maoIsNOTThreeOfAKind.ranking());
+    }
+	
+	@Test
     public void testIsTwoPairs() {
         
         List<Carta> cartasIsTwoPairs = Arrays.asList(
-                new Carta(6, Naipe.PAUS),
-                new Carta(6, Naipe.ESPADAS),
-                new Carta(8, Naipe.OUROS),
-                new Carta(8, Naipe.COPAS),
-                new Carta(3, Naipe.OUROS)
+        		new CartaBuilder().withValor(3).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(3).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
         );
 
         Mao maoIsTwoPairs = new Mao(cartasIsTwoPairs);
@@ -145,18 +249,50 @@ public class MaoTest {
     }
 	
 	@Test
+    public void testIsNOTTwoPairs() {
+        
+        List<Carta> cartasIsNOTTwoPairs = Arrays.asList(
+        		new CartaBuilder().withValor(10).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
+        );
+
+        Mao maoIsNOTTwoPairs = new Mao(cartasIsNOTTwoPairs);
+        
+        Assertions.assertNotEquals(RankingMao.DOIS_PARES, maoIsNOTTwoPairs.ranking());
+    }
+	
+	@Test
     public void testIsOnePair() {
         
         List<Carta> cartasIsOnePair = Arrays.asList(
-                new Carta(6, Naipe.PAUS),
-                new Carta(7, Naipe.ESPADAS),
-                new Carta(8, Naipe.OUROS),
-                new Carta(8, Naipe.COPAS),
-                new Carta(3, Naipe.OUROS)
+        		new CartaBuilder().withValor(10).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(10).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(1).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(3).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
         );
 
         Mao maoIsOnePair = new Mao(cartasIsOnePair);
         
         Assertions.assertEquals(RankingMao.UM_PAR, maoIsOnePair.ranking());
+    }
+	
+	@Test
+    public void testIsNOTOnePair() {
+        
+        List<Carta> cartasIsNOTOnePair = Arrays.asList(
+        		new CartaBuilder().withValor(10).withNaipe(Naipe.OUROS).build(),
+                new CartaBuilder().withValor(5).withNaipe(Naipe.ESPADAS).build(),
+                new CartaBuilder().withValor(1).withNaipe(Naipe.PAUS).build(),
+                new CartaBuilder().withValor(3).withNaipe(Naipe.COPAS).build(),
+                new CartaBuilder().withValor(7).withNaipe(Naipe.ESPADAS).build()
+        );
+
+        Mao maoIsNOTOnePair = new Mao(cartasIsNOTOnePair);
+        
+        Assertions.assertNotEquals(RankingMao.UM_PAR, maoIsNOTOnePair.ranking());
     }
 }
